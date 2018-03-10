@@ -1,0 +1,31 @@
+<!doctype html>
+
+<style>
+  * { box-sizing: border-box; }
+  body { position: absolute; top: 0; right: 0; bottom: 0; left: 0; font-family: Monospace; }
+  #inputWrap { position: absolute; top: 50px; right: 0; bottom: 0; left: 0; }
+  #input { height: 100%; width: 100%; resize: none; }
+  code { border: 1px solid #ccc; }
+</style>
+
+<p>Enter frequency ratios (multiple for chords) to be played in sequence. Press <code>ctrl+enter</code> to play.</p>
+
+<div id="inputWrap">
+  <textarea id="input" autofocus>[
+  [1],
+  [4/3],
+  [5/4],
+  [4/3],
+  [3/2],
+  [1],
+  [4/3, 5/4],
+  [3/2, 5/4],
+  [3/2, 5/3],
+  [4/3, 5/4],
+  [4/3, 5/3],
+  [3/2, 5/4],
+  [2, 3/2]
+]</textarea>
+</div>
+
+<script src="main.js"></script>

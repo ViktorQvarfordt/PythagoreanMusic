@@ -2,6 +2,10 @@
 
 Generating music the way Pythagoras would have done if he had a computer.
 
+- [RatioRoll](RatioRoll)
+- [PrimeMusic](PrimeMusic)
+
+
 ## Resources
 
 - https://en.wikipedia.org/wiki/Equal_temperament#Comparison_to_just_intonation
