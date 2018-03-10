@@ -6,20 +6,31 @@ class Pythagoras {
     this.audioCtx = new AudioContext()
     this.masterGain = this.audioCtx.createGain()
     this.masterGain.connect(this.audioCtx.destination)
+    this.oscs = []
   }
 
-  play(ratioss) {
-    // Set up oscillators
-    const numOscs = Math.max(...ratioss.map(ratios => ratios.length))
-    ratioss.push(Array(numOscs).fill(0)) // End with silence
-    const oscs = []
+  initOscillators() {
+    // Clear old oscillators
+    this.oscs.map(osc => {
+      osc.stop()
+      osc.disconnect()
+    })
+
+    // Set up oscillators, 10 should be enough
+    const numOscs = 10
+    this.oscs = []
     for (let i = 0; i < numOscs; i++) {
       const osc = this.audioCtx.createOscillator()
       osc.connect(this.masterGain)
       osc.frequency.setValueAtTime(0, 0)
       osc.start()
-      oscs.push(osc)
+      this.oscs.push(osc)
     }
+  }
+
+  play(ratioss) {
+    this.initOscillators()
+    ratioss.push(Array(this.oscs.length).fill(0)) // End with silence
 
     const baseFreq = 300
     const toneLength = 0.5 // seconds
@@ -28,8 +39,8 @@ class Pythagoras {
     for (let t = 0; t < ratioss.length; t++) {
       const ratios = ratioss[t]
 
-      for (let i = 0; i < numOscs; i++) {
-        const osc = oscs[i]
+      for (let i = 0; i < this.oscs.length; i++) {
+        const osc = this.oscs[i]
 
         // Only activate as many oscillators as there are specified ratios
         let ratio = 0
@@ -55,7 +66,6 @@ document.addEventListener('keydown', (event) => {
   // Delay execution until next event loop so that DOM has time to update
   setTimeout(() => {
     const ratioss = eval(document.getElementById('input').value)
-    console.log(ratioss)
     pythagoras.play(ratioss)
   }, 0)
 })
