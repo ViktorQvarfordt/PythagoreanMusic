@@ -69,3 +69,9 @@ document.addEventListener('keydown', (event) => {
     pythagoras.play(ratioss)
   }, 0)
 })
+
+play = (sound) => {
+  setTimeout(() => {
+    pythagoras.play(sound)
+  }, 0)
+}
