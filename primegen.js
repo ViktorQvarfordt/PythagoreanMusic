@@ -32,23 +32,36 @@ osc2.type = 'square';
 
 let ground = 300;
 
-let base = [2.0, 3.0];
-console.log(base)
 
 let maxIntervalChange = 3
 let maxToneCoeff = 4
-let maxAccordChange = 2;
+let maxAccordChange = 2
 
+let base = [2.0, 3.0];
+let tone = [0, 0];
+
+// More primes:
+// maxIntervalChange = 2
+// maxToneCoeff = 2
+// maxAccordChange = 1
+// base = [2.0, 3.0, 5.0];
+// tone = [0, 0, 0];
+
+console.log(base)
 let tones = [];
 for (let i = -maxIntervalChange ; i < maxIntervalChange + 1; i++) {
     for (let j = -maxIntervalChange ; j < maxIntervalChange + 1; j++) {
+      // for (let k = -maxIntervalChange/2 ; k < maxIntervalChange/2 + 1; k++) 
+      {
 
-        let tone = [i, j];
-        let f = freq(base, tone);
+      //   let t = [i, j, k];
+        let t = [i, j];
+        let f = freq(base, t);
         if (f > 0.5 && f < 2.0 ) {
-            console.log(tone, f);
-            tones.push(tone);
+            console.log(t, f);
+            tones.push(t);
         }
+      }
     }
 }
 
@@ -81,13 +94,12 @@ function newTone(tone, maxIntervalChange) {
 }
 
 
-let tone = [0, 0];
 song = [[]]
 
 let t = 0
 for (let j = 0 ; j < 3 ; j++){
   let length = t + 2**Math.floor(Math.random());
-  length=5
+  // length=5
   block = []
 
   while (t < length) {
@@ -110,23 +122,26 @@ for (let j = 0 ; j < 3 ; j++){
   song[0].push(block)
 }
 
-for (let level = 1 ; level < 2 ; level++) {
+for (let level = 1 ; level < 3 ; level++) {
 song.push([])
-  // for (let i = 0 ; i < 3 ; i++){
+  for (let i = 0 ; i < 2 ; i++){
     let block = []
     let length = Math.floor(Math.random()*3) + 1
-    length = 10
+    length = 8
     for (let j = 0 ; j < length ; j++){
       let idx = Math.floor(Math.random()*song[level-1].length)
       block.push(idx)
     }
     song[level].push(block)
-  // }
+  }
 }
 
 
 let fl = false
 if (fl) {
+masterGain = audioCtx.createGain()
+masterGain.gain.setValueAtTime(0.5 / 2.0)
+masterGain.connect(audioCtx.destination)
 osc.connect(audioCtx.destination);
 osc.start();
 osc.stop(audioCtx.currentTime + t);
@@ -135,7 +150,26 @@ osc2.start();
 osc2.stop(audioCtx.currentTime + t);
 }
 
-document.getElementById('input').value = JSON.stringify(song)
+// Pretty print of json lists:
+text = ""
+text = text.concat("[\n")
+for (let i = 0 ; i < song.length ; i++) {
+  text = text.concat("[\n")
+  for (let j = 0 ; j < song[i].length ; j++) {
+    text = text.concat(JSON.stringify(song[i][j]))
+    if (j != song[i].length-1){
+      text = text.concat(",")
+    }
+    text = text.concat("\n")
+  }
+  text = text.concat("]")
+  if (i != song.length-1){
+    text = text.concat(",")
+  }
+}
+text = text.concat("\n]")
+
+document.getElementById('input').value = text
 
 class Player {
   constructor() {
@@ -209,7 +243,7 @@ class Player {
 
         osc.frequency.setValueAtTime(baseFreq * f, t)
         // Avoid clipping:
-        this.masterGain.gain.setValueAtTime(2.0 / Math.max(1, tones.length), t)
+        this.masterGain.gain.setValueAtTime(0.5 / Math.max(1, tones.length), t)
       }
       t += block[i][1]
     }
