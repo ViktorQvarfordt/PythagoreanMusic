@@ -1,0 +1,26 @@
+<!doctype html>
+
+<style>
+  * { box-sizing: border-box; }
+  body { position: absolute; top: 0; right: 0; bottom: 0; left: 0; font-family: Monospace; }
+  #inputWrap { position: absolute; top: 50px; right: 0; bottom: 0; left: 0; }
+  #input { height: 50%; width: 100%; resize: none; }
+  code { border: 1px solid #ccc; }
+</style>
+
+<button onClick="play([[1],])">[1]</button> <button onClick="play([[4/3],])">[4/3]</button>  <button onClick="play([[5/4],])">[5/4]</button>  <button onClick="play([[5/3],])">[5/3]</button> <button onClick="play([[3/2],])">[3/2]</button> <button>Play</button>
+
+<div style="flex:1; align-items: space-between">
+  <div onmousedown="play([[1],])" style="padding:20px; background-color: blue;">1</div>
+  <div onmousedown="play([[4/3],])" style="padding:20px; background-color: red;">3/2</div>
+  <div onmousedown="play([[5/4],])" style="padding:20px; background-color: yellow;">4/3</div>
+  <div onmousedown="play([[5/3],])" style="padding:20px; background-color: green;">5/4</div>
+  <div onmousedown="play([[4/2],])" style="padding:20px; background-color: violet;">6/9</div>
+  <div onmousedown="play([[6/2],])" style="padding:20px; background-color: pink;">7/4</div>
+  <div onmousedown="play([[7/2],])" style="padding:20px; background-color: orange">6/5</div>
+  <div onmousedown="play([[3/2],])" style="padding:20px; background-color: cyan">5/4</div>
+  <div onmousedown="play([[5/2],])" style="padding:20px; background-color: grey">3/2</div>
+
+</div>
+
+<script src="main.js"></script>
