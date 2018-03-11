@@ -2,6 +2,8 @@
 
 Generating music the way Pythagoras would have done if he had a computer.
 
+Go to https://viktorqvarfordt.github.io/PythagoreanMusic/ to see live demos.
+
 - [RatioRoll](RatioRoll)
 - [PrimeMusic](PrimeMusic)
 
