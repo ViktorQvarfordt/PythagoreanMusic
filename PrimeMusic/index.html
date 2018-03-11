@@ -1,5 +1,35 @@
 <!doctype html>
 
+<style>
+  * { box-sizing: border-box; }
+  body { position: absolute; top: 0; right: 0; bottom: 0; left: 0; font-family: Monospace; }
+  #inputWrap { position: absolute; top: 50px; right: 0; bottom: 0; left: 0; }
+  #input { height: 100%; width: 100%; resize: none; }
+  code { border: 1px solid #ccc; }
+</style>
+
+<p>Recursive representation of tones as exponents and durations. Starts at 'main' key. <code>ctrl+enter</code> to play.</p>
+
+<div id="inputWrap">
+  <textarea id="input" autofocus>
+[
+[
+[
+  [[[1, -1], [1, 1]],  0.5],
+  [[[1, 0], [1, 0]],  0.5]
+],
+[
+  [[[0, -1], [1, 0]],  0.5],
+  [[[1, -1], [1, 1]],  0.5]
+]
+],
+[
+[0, 1, 0]
+]
+]
+</textarea>
+</div>
+
 Prime Music
 <script src='primegen.js'>
 </script>
