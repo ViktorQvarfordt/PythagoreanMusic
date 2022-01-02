@@ -25,6 +25,10 @@ export function asNonNullable<T>(val: T | null | undefined, msg?: string): T {
   return val
 }
 
+export function isNonNullable<T>(val: T | null | undefined): val is T {
+  return val !== undefined && val !== null
+}
+
 export const cartProd = <T1, T2>(a1: T1[], a2: T2[]): [T1, T2][] => {
   const result: [T1, T2][] = []
   for (const v1 of a1) {
@@ -43,32 +47,33 @@ export const multiCartProdWithoutDiagonals = <T>(arr: T[], n: number): T[][] => 
     .value()
 }
 
-export const semitones: { semitone: number; freq: number }[] = [
-  { semitone: 0, freq: 2 ** (0 / 12) },
-  { semitone: 1, freq: 2 ** (1 / 12) },
-  { semitone: 2, freq: 2 ** (2 / 12) },
-  { semitone: 3, freq: 2 ** (3 / 12) },
-  { semitone: 4, freq: 2 ** (4 / 12) },
-  { semitone: 5, freq: 2 ** (5 / 12) },
-  { semitone: 6, freq: 2 ** (6 / 12) },
-  { semitone: 7, freq: 2 ** (7 / 12) },
-  { semitone: 8, freq: 2 ** (8 / 12) },
-  { semitone: 9, freq: 2 ** (9 / 12) },
-  { semitone: 10, freq: 2 ** (10 / 12) },
-  { semitone: 11, freq: 2 ** (11 / 12) },
-]
+export const semitones: { semitone: number; freq: number }[] = _.range(50).map(i => ({
+  semitone: i,
+  freq: 2 ** (i / 12),
+}))
 
-export function toSemitone(val: number): number
-export function toSemitone(val: Ratio): number
-export function toSemitone(val: number | Ratio): number {
+type semitoneData = {
+  semitone: number
+  freq: number
+  relativeError: number
+  semitoneError: number
+}
+
+export function toSemitoneData(val: number): semitoneData
+export function toSemitoneData(val: Ratio): semitoneData
+export function toSemitoneData(val: number | Ratio): semitoneData {
   return _.chain(semitones)
-    .map(({ semitone, freq }) => ({
-      semitone,
-      logDist: Math.log(val instanceof Ratio ? val.toFloat() : val) - Math.log(freq),
-    }))
-    .sortBy(({ logDist }) => Math.abs(logDist))
+    .map(({ semitone, freq }) => {
+      const float = val instanceof Ratio ? val.toFloat() : val
+      return {
+        semitone,
+        freq,
+        relativeError: freq / float,
+        semitoneError: Math.log(freq / float) / Math.log(Math.pow(2, 1 / 12)),
+      }
+    })
+    .sortBy(({ semitoneError }) => Math.abs(semitoneError))
     .first()
-    .get('semitone')
     .value()
 }
 
@@ -81,4 +86,41 @@ export const log = (...args: unknown[]): void => {
     first = false
   })
   process.stdout.write('\n')
+}
+
+export const notes = [
+  'C',
+  'C#',
+  'D',
+  'D#',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'G#',
+  'A',
+  'A#',
+  'B',
+  'C2',
+  'C2#',
+  'D2',
+  'D2#',
+  'E2',
+  'F2',
+  'F2#',
+  'G2',
+  'G2#',
+  'A2',
+  'A2#',
+  'B2',
+] as const
+
+export type Note = typeof notes[number]
+
+export const semitoneToNote = (semitone: number): Note => asNonNullable(notes[semitone])
+
+export const toPercentRelZero = (x: number): string => {
+  assert(-1 < x && x < 1, `Expected -1 < x < 1 but got ${x}`)
+  const sign = Math.sign(x)
+  return `${sign < 0 ? '-' : ''}${Math.abs(x).toFixed(2).slice(2)}%`
 }

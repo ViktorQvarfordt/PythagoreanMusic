@@ -1,12 +1,6 @@
 import util from 'util'
+import { gcd } from '~/gcd'
 import { asNonNullable, assert } from '~/utils'
-
-const gcd = (a: number, b: number): number => {
-  assert(Number.isSafeInteger(a) && Number.isSafeInteger(b), `gcd(${a}, ${b}`)
-  const result = b === 0 ? a : gcd(b, a % b)
-  assert(Number.isSafeInteger(result), `gcd result ${result}`)
-  return result
-}
 
 export class Ratio {
   a: number

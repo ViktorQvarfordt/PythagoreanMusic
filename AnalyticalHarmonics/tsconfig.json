@@ -2,7 +2,7 @@
   "include": ["."],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2021",
     "strict": true,
     "alwaysStrict": true,
     "strictNullChecks": true,
@@ -16,8 +16,9 @@
     "exactOptionalPropertyTypes": true,
     "esModuleInterop": true,
     "downlevelIteration": true,
-    "lib": ["ESNext", "dom"],
     "skipLibCheck": true,
+    "moduleResolution": "node",
+    // "lib": ["ESNext", "dom"],
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]

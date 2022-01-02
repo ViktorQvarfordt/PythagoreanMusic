@@ -1,9 +1,10 @@
-import { semitones, toSemitone } from '~/utils'
+import { semitones, toSemitoneData } from '~/utils'
 
-describe('toSemitone', () => {
+describe('toSemitoneData', () => {
   it('invariant', () => {
     for (const { semitone, freq } of semitones) {
-      expect(toSemitone(freq)).toEqual(semitone)
+      expect(toSemitoneData(freq).semitone).toEqual(semitone)
+      expect(toSemitoneData(freq).semitoneError).toEqual(0)
     }
   })
 })
