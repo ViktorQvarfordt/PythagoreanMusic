@@ -28,3 +28,10 @@ chord   intSum  diag   ratios        approxNotes  semitoneError
 ## Milestones
 
 - Generate all fundamental scales and listen to them
+
+
+## Play arbitrary frequencies over MIDI
+
+MIDI 1.0 only support global pitch bend. Pitch bend per note is supported only in MIDI 2.0.
+
+https://stackoverflow.com/questions/4552085/programming-with-midi-and-tuning-notes-to-specific-frequencies
