@@ -24,9 +24,9 @@ export class Chord {
   static valid = (xs: number[]): boolean => {
     const d = gcd(xs)
     return (
-      xs.map(x => x / d).every(x => Number.isSafeInteger(x) && x > 1) &&
+      xs.map(x => x / d).every(x => Number.isSafeInteger(x) && x > 0) &&
       xs.length === _.uniq(xs).length &&
-      xs.length > 1
+      xs.length > 0
     )
   }
 
@@ -75,10 +75,10 @@ export class Chord {
   private assert(): void {
     this.xs.forEach(x => {
       assert(Number.isSafeInteger(x), `Chord can only contain integer, got ${x}`)
-      assert(x > 1, `Chord cannot contain values <= 1, got ${x}`)
+      assert(x >= 1, `Chord cannot contain values < 1, got ${x}`)
     })
     assert(this.xs.length === _.uniq(this.xs).length, 'Chord cannot contain duplicates')
-    assert(this.xs.length > 1)
+    assert(this.xs.length > 0, 'Chord must contain at least one period')
   }
 }
 
