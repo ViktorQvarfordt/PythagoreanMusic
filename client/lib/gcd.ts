@@ -1,4 +1,4 @@
-import { assert } from '~/utils'
+import { assert } from '~/lib/utils'
 
 const gcdTwo = (a: number, b: number): number => {
   assert(Number.isSafeInteger(a) && Number.isSafeInteger(b), `gcd(${a}, ${b}`)

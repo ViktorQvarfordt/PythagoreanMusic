@@ -1,0 +1,42 @@
+{
+  "name": "client",
+  "private": true,
+  "scripts": {
+    "postinstall": "rm node_modules/~ && ln -s ../ node_modules/~ && sed -i'' -e 's/\"main\": \"combinatorics.js\"/\"main\": \"commonjs\\/combinatorics.js\"/g' node_modules/js-combinatorics/package.json",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "check:ts": "tsc --project tsconfig.json --noEmit",
+    "check:eslint": "eslint --quiet --ext .ts --ext .tsx .",
+    "check:stylelint": "stylelint --quiet **/*.css",
+    "test:ci": "jest --ci",
+    "test": "jest"
+  },
+  "dependencies": {
+    "immutable": "^4.0.0",
+    "js-combinatorics": "^1.5.4",
+    "lodash": "^4.17.21",
+    "next": "12.0.7",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.0",
+    "@types/lodash": "^4.14.178",
+    "@types/node": "17.0.6",
+    "@types/react": "17.0.38",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "eslint": "8.6.0",
+    "eslint-config-next": "12.0.7",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-total-functions": "^5.0.1",
+    "jest": "^27.4.5",
+    "stylelint": "^14.2.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^24.0.0",
+    "ts-jest": "^27.1.2",
+    "typescript": "4.5.4"
+  }
+}

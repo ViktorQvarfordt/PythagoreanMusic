@@ -1,3 +1,5 @@
+# Analytical Harmonics
+
 ## Observations
 
 This is a list of the most harmonic non-trivial chords of size 3,
@@ -28,7 +30,6 @@ chord   intSum  diag   ratios        approxNotes  semitoneError
 ## Milestones
 
 - Generate all fundamental scales and listen to them
-
 
 ## Play arbitrary frequencies over MIDI
 

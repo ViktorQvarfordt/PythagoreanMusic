@@ -1,4 +1,4 @@
-import { gcd } from '~/gcd'
+import { gcd } from '~/lib/gcd'
 
 describe('gcd', () => {
   it('1', () => {

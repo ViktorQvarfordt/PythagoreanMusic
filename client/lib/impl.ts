@@ -1,6 +1,6 @@
 import { Combination } from 'js-combinatorics'
 import _ from 'lodash'
-import { R, Ratio } from '~/ratio'
+import { R, Ratio } from '~/lib/ratio'
 import {
   asNonNullable,
   cartProd,
@@ -9,7 +9,7 @@ import {
   semitoneToNote,
   toPercentRelZero,
   toSemitoneData,
-} from '~/utils'
+} from '~/lib/utils'
 
 const rs = _.chain(_.range(1, 20))
   .thru(it => cartProd(it, it))

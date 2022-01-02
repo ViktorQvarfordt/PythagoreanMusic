@@ -1,6 +1,6 @@
 import util from 'util'
-import { gcd } from '~/gcd'
-import { asNonNullable, assert } from '~/utils'
+import { gcd } from '~/lib/gcd'
+import { asNonNullable, assert } from '~/lib/utils'
 
 export class Ratio {
   a: number

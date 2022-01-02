@@ -1,4 +1,4 @@
-import { Ratio } from '~/ratio'
+import { Ratio } from '~/lib/ratio'
 
 const pianoFreq = {
   '1': 2 ** (0 / 12),

@@ -1,4 +1,4 @@
-import { semitones, toSemitoneData } from '~/utils'
+import { semitones, toSemitoneData } from '~/lib/utils'
 
 describe('toSemitoneData', () => {
   it('invariant', () => {

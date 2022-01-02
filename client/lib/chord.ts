@@ -1,25 +1,30 @@
 import _ from 'lodash'
 import util from 'util'
-import { gcd } from '~/gcd'
-import { Ratio } from '~/ratio'
-import { asNonNullable, assert, semitoneToNote, toPercentRelZero, toSemitoneData } from '~/utils'
+import { gcd } from '~/lib/gcd'
+import { Ratio } from '~/lib/ratio'
+import {
+  asNonNullable,
+  assert,
+  multiCartProdWithoutDiagonals,
+  semitoneToNote,
+  toPercentRelZero,
+  toSemitoneData,
+} from '~/lib/utils'
 
 export class Chord {
   private readonly xs: number[]
 
-  static fromString = (s: string): Chord => new Chord(s.split(':').map(x => parseInt(x)))
+  static fromString = (s: string) => new Chord(s.split(':').map(x => parseInt(x)))
 
-  static toString = (c: Chord): string => c.toString()
+  static toString = (c: Chord) => c.toString()
 
-  static inspect = (c: Chord): string => c.toString()
+  static eq = (c1: Chord, c2: Chord) => c1.eq(c2)
 
-  static eq = (c1: Chord, c2: Chord): boolean => c1.eq(c2)
+  static impurity = (c: Chord) => c.impurity()
 
-  static impurity = (c: Chord): number => c.impurity()
+  static diag = (c: Chord) => c.diag()
 
-  static diag = (c: Chord): number => c.diag()
-
-  static analyze = (c: Chord): string => c.analyze()
+  static analyze = (c: Chord) => c.analyze()
 
   static valid = (xs: number[]): boolean => {
     const d = gcd(xs)
@@ -38,38 +43,38 @@ export class Chord {
     this.assert()
   }
 
-  toString = (): string => this.xs.join(':');
+  toString = () => this.xs.join(':');
 
-  [util.inspect.custom] = (): string => this.toString()
+  [util.inspect.custom] = () => this.toString()
 
-  toJSON = (): string => this.toString()
+  toJSON = () => this.toString()
 
-  eq = (that: Chord): boolean => _.zip(this.xs, that.xs).every(([x1, x2]) => x1 === x2)
+  eq = (that: Chord) => _.zip(this.xs, that.xs).every(([x1, x2]) => x1 === x2)
 
-  impurity = (): number => _.sum(this.xs)
+  impurity = () => _.sum(this.xs)
 
-  length = (): number => this.xs.length
+  length = () => this.xs.length
 
-  diag = (): number => asNonNullable(_.last(this.xs)) / asNonNullable(_.first(this.xs))
+  diag = () => asNonNullable(_.last(this.xs)) / asNonNullable(_.first(this.xs))
 
   toRatios = (): Ratio[] => {
     const d = asNonNullable(this.xs[0])
     return this.xs.slice(1).map(x => new Ratio(x, d))
   }
 
-  analyze = (): string => {
+  analyze = (): string[] => {
     const rs = this.toRatios()
     const tones = ['C', ...rs.map(r => semitoneToNote(toSemitoneData(r).semitone))]
     const semitoneError = rs.map(r => toPercentRelZero(toSemitoneData(r).semitoneError)).join(' ')
     const data = [
       this.toString(),
-      this.impurity(),
+      this.impurity().toString(),
       this.diag().toFixed(2),
       rs.join(' '),
       tones.join(' '),
       semitoneError,
     ]
-    return data.join('  ')
+    return data
   }
 
   private assert(): void {
@@ -83,3 +88,13 @@ export class Chord {
 }
 
 export const C = Chord.fromString
+
+export const getChords = (n: number, max: number = 3): Chord[] =>
+  _.chain(_.range(2, 10))
+    .thru(it => multiCartProdWithoutDiagonals(it, n))
+    .filter(Chord.valid)
+    .map(xs => new Chord(xs))
+    .filter(c => c.diag() < max)
+    .uniqWith(Chord.eq)
+    .sortBy(Chord.impurity)
+    .value()

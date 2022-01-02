@@ -1,12 +1,14 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "total-functions", "import"],
   "extends": [
+    "next/core-web-vitals",
     "eslint:recommended",
     "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
+
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "total-functions", "import"],
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module",
@@ -28,7 +30,7 @@
       { "selector": "variableLike", "format": ["camelCase", "PascalCase"] }
     ],
     "@typescript-eslint/explicit-function-return-type": [
-      "error",
+      "off",
       {
         "allowExpressions": true
       }
@@ -92,5 +94,13 @@
         "patterns": [".*"]
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["pages/**/*.ts", "pages/**/*.tsx"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    }
+  ]
 }

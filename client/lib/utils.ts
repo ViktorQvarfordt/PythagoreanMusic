@@ -2,7 +2,7 @@ import { Set } from 'immutable'
 import { CartesianProduct } from 'js-combinatorics'
 import _ from 'lodash'
 import util from 'util'
-import { Ratio } from '~/ratio'
+import { Ratio } from '~/lib/ratio'
 
 /**
  * Throws is condition is false. Narrows TS type if condition is true.
@@ -122,5 +122,5 @@ export const semitoneToNote = (semitone: number): Note => asNonNullable(notes[se
 export const toPercentRelZero = (x: number): string => {
   assert(-1 < x && x < 1, `Expected -1 < x < 1 but got ${x}`)
   const sign = Math.sign(x)
-  return `${sign < 0 ? '-' : ''}${Math.abs(x).toFixed(2).slice(2)}%`
+  return `${sign < 0 ? '-' : '+'}${Math.abs(x).toFixed(2).slice(2)}%`
 }

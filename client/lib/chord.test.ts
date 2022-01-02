@@ -1,4 +1,4 @@
-import { C, Chord } from '~/chord'
+import { C, Chord } from '~/lib/chord'
 
 describe('Chord', () => {
   it('invariant 1', () => {

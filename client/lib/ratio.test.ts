@@ -1,4 +1,4 @@
-import { Ratio } from '~/ratio'
+import { Ratio } from '~/lib/ratio'
 
 describe('Rational', () => {
   it('invariant 1', () => {
