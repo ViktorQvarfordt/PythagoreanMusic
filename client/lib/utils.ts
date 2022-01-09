@@ -124,3 +124,11 @@ export const toPercentRelZero = (x: number): string => {
   const sign = Math.sign(x)
   return `${sign < 0 ? '-' : '+'}${Math.abs(x).toFixed(2).slice(2)}%`
 }
+
+export function* enumerate<T>(iter: Iterable<T>): Iterable<[T, number]> {
+  let i = 0
+  for (const val of iter) {
+    yield [val, i]
+    i++
+  }
+}
