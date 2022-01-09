@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Chord, getChords } from '~/lib/chord'
 import { Ratio } from '~/lib/ratio'
-import { Synth, Tone } from '~/lib/synth'
+import { ChordSpec, Synth, ToneSpec } from '~/lib/synth'
 import { enumerate } from '~/lib/utils'
 import styles from '~/styles/Index.module.css'
 
@@ -34,7 +34,7 @@ const View = () => {
   const toneLength = 0.5
   const startFrequency = 300
 
-  const transformAbs = (): Tone[] =>
+  const transformAbs = (): ToneSpec[] =>
     text.split(' ').map((val, i) => ({
       frequency: parseInt(val),
       velocity: 0.5,
@@ -42,9 +42,17 @@ const View = () => {
       duration: toneLength * 0.9,
     }))
 
-  const transformRel = (): Tone[] => {
+  const transformAbsChord = (): ChordSpec[] =>
+    text.split(' ').map((val, i) => ({
+      frequencies: [parseInt(val), parseInt(val) * (3 / 2)],
+      velocity: 0.5,
+      start: i * toneLength,
+      duration: toneLength * 0.9,
+    }))
+
+  const transformRel = (): ToneSpec[] => {
     let prevFreq = startFrequency
-    const result: Tone[] = []
+    const result: ToneSpec[] = []
     for (const [val, i] of enumerate(text.split(' '))) {
       console.log(val, i)
       const tone = {
@@ -67,6 +75,7 @@ const View = () => {
 
       <textarea value={text} onChange={e => setText(e.target.value)}></textarea>
       <button onClick={() => synthRef.current?.play(transformAbs())}>Play abs</button>
+      <button onClick={() => synthRef.current?.playChord(transformAbsChord())}>Play chord</button>
 
       <br />
 
@@ -75,7 +84,8 @@ const View = () => {
 
       <br />
 
-      <button onClick={() => synthRef.current?.stop()}>Stop abs</button>
+      <button onClick={() => synthRef.current?.stop()}>stop</button>
+      <button onClick={() => synthRef.current?.destroy()}>destroy</button>
 
       <pre>
         {tabular(getChords(2, 2).map(Chord.analyze))}
