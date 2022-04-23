@@ -1,5 +1,3 @@
-import { Set } from 'immutable'
-import { CartesianProduct } from 'js-combinatorics'
 import _ from 'lodash'
 import util from 'util'
 import { Ratio } from '~/lib/ratio'
@@ -37,14 +35,6 @@ export const cartProd = <T1, T2>(a1: T1[], a2: T2[]): [T1, T2][] => {
     }
   }
   return result
-}
-
-export const multiCartProdWithoutDiagonals = <T>(arr: T[], n: number): T[][] => {
-  return _.chain([...new CartesianProduct(..._.range(n).map(() => arr))])
-    .map(comb => Set(comb))
-    .filter(combSet => combSet.size === n)
-    .map(combSet => [...combSet])
-    .value()
 }
 
 export const semitones: { semitone: number; freq: number }[] = _.range(50).map(i => ({

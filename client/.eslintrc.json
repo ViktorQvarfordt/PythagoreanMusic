@@ -44,7 +44,7 @@
     "require-await": "off",
     "@typescript-eslint/require-await": "off", // This interferes with the case of having a callback that is typed to return a promise but you don't use await in the body
     "@typescript-eslint/prefer-regexp-exec": "error",
-    "@typescript-eslint/ban-ts-comment": "error",
+    "@typescript-eslint/ban-ts-comment": "warn",
     "@typescript-eslint/no-use-before-define": "error",
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-var-requires": "error",
@@ -93,7 +93,8 @@
       {
         "patterns": [".*"]
       }
-    ]
+    ],
+    "react-hooks/exhaustive-deps": "error"
   },
   "overrides": [
     {
